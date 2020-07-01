@@ -1,5 +1,6 @@
 #include <iostream>
 #include "vector3d.h"
+#include "matrix3d.h"
 using namespace std;
 
 int main(int argc, char const *argv[])
