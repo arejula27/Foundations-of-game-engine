@@ -68,14 +68,14 @@ struct Matrix3D
 
        
 };
-
+    //calcula el determinante 
     float Determinante(const Matrix3D& M){
             return (M(0,0) * (M(1,1) * M(2,2) - M(1,2) * M(2,1))+
                     M(0,1) * (M(1,2) * M(2,0) - M(1,0) * M(2,2))+
                     M(0,2) * (M(2,1) * M(2,1) - M(1,1) *M(2,0)));
         }
 
-
+    //invierte una matriz
     Matrix3D Inverse(const Matrix3D& M){
         const Vector3D& a = M[0];
         const Vector3D& b = M[1];
@@ -90,6 +90,56 @@ struct Matrix3D
         return Matrix3D (r0.x * invDet,r0.y * invDet, r0.z * invDet,
                                 r1.x * invDet, r1.y * invDet, r1.z * invDet,
                                 r2.x * invDet, r2.y * invDet, r2.z * invDet);
+
+
+    }
+    //devuelve una matriz que representa la rotación en el eje x
+    Matrix3D MakeRotationX(float t){
+        float c = cos (t);
+        float s = sin (t);
+
+        return (Matrix3D(1.0F,0.0F, 0.0F,
+                    0.0F, c , -s,
+                    0.0F, s ,c));
+    }
+    //devuelve una matriz que representa la rotación en el eje y
+    Matrix3D MakeRotationY(float t){
+        float c = cos (t);
+        float s = sin (t);
+
+        return (Matrix3D(c,0.0F, s,
+                    0.0F, 1.0F, 0.0F,
+                    -s, 0.0F ,c));
+    }
+
+    //devuelve una matriz que representa la rotación en el eje z
+    Matrix3D MakeRotationZ(float t){
+        float c = cos (t);
+        float s = sin (t);
+
+        return (Matrix3D(c,-s , 0.0F,
+                    s, c, 0.0F,
+                    0.0F, 0.0F ,1.0F));
+    }
+
+    //devuelve la rotación sobre un eje 'a' con un ángulo 't'
+    Matrix3D MakeRotation (float t, const Vector3D& a){
+            float c = cos(t);
+            float s = sin(t);
+            float d = 1.0 -c;
+
+            float x = a.x * d ;
+
+            float y = a.y * d;
+            float z = a.z*d;
+            float axay = x * a.y;
+            float axaz = x * a.z;
+            float ayaz = y * a.z;
+
+            return (Matrix3D(c+ x *a.x, axay -s * a.z, axaz + s* a.y,
+            axay + s *a.z, c + y * a.y, ayaz -s * a.x,
+            axaz -s * a.y , ayaz +s * a.x , c + z * a.z));
+
 
 
     }
