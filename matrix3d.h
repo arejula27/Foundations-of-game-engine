@@ -143,3 +143,32 @@ struct Matrix3D
 
 
     }
+    //Devuelve la reflexion sobre un plano perpendicular al vector 'a'
+    Matrix3D MakeReflection (const Vector3D& a){
+        float x = a.x * -2.0F;
+        float y = a.y * -2.0F;
+        float z = a.z * -2.0F;
+        float axay = x * a.y;
+        float axaz = x * a.z;
+        float ayaz = y *a.z;
+
+        return (Matrix3D(x * a.x + 1.0F, axay, axaz,
+        axay, a.y +1.0F, ayaz,
+        axaz, ayaz, z * a.z + 1.0F));
+    }
+
+    //Devuelve la involucion
+    Matrix3D Makeinvolution (){
+
+        float x = a.x * -2.0F;
+        float y = a.y * -2.0F;
+        float z = a.z * -2.0F;
+        float axay = x * a.y;
+        float axaz = x * a.z;
+        float ayaz = y *a.z;
+
+        return (Matrix3D(x * a.x - 1.0F, axay, axaz,
+        axay, a.y - 1.0F, ayaz,
+        axaz, ayaz, z * a.z - 1.0F));
+
+    }
